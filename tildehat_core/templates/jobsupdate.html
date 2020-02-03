@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+  {% block content %}
+    <br><br><br><br>
+  <div class="container is-fluid">
+    <form method="post">
+      {% csrf_token %}
+      <!-- <label for="job_desc">Job Description</label><br> -->
+      <input type="text" name="job_description" value="{{job_data.job_description}}"><br><br>
+      Walk In?
+      <input type="checkbox" name="walk_in" value="yes"
+      {% if job_data.walk_in %} checked {% endif %}><br>
+      <!-- <button class="button is-success" type="submt">Success</button> -->
+      <input class = "button is-success" type="submit" value="Submit">
+    </form>
+    <br><br><br>
+    <a class = "button is-danger" href="/jobdelete/{{ job_data.job_id }}">Delete</a>
+
+  </div>
+
+  {% endblock %}

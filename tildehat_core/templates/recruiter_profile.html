@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Complete your profile to get recruiter access</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ r_p_form.as_p }}
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

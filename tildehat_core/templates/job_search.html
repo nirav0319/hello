@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{{search_term}}
+<center>
+    <div class="column is-three-quarters">
+        {% for job in jobs %}
+        <div class="box">
+            <nav class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTMz3HkxxUMy3ouQAudAIDNwSOI5D932PgxaoDAdwzG0_vl5IgD" width=100 height=100>
+                    </div>
+                    <div class="level-item">
+                        <div class="column is-narrow">
+                            <div class="media-content">
+                                <div class="content">
+                                    <h4 class="header">
+                                        <b>{{job.enrichment.company}} - {{job.enrichment.role}} @ {{job.enrichment.city}}</b></h4>
+                                    <font color="black">
+                                        CTC: <b>{{job.enrichment.salary}}</b><br>
+                                        Education: <b>{{job.enrichment.salary}}</b><br>
+                                        Experience: <b>{{job.enrichment.experience}}</b><br>
+                                        Openings: <b>{{job.enrichment.openings}}</b><br>
+                                    </font><br>
+                                    <div class="tags are-medium">
+                                        {% for skill in job.enrichment.skills %}
+                                        <span class="tag is-rounded  is-info"> {{skill}} </span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right side -->
+                <div class="level-right">
+                  <div class="level-item">
+                    <font size=3><b>{{ job.date }}</b></font><br> <!-- Show recency in terms of n days ago -->
+                  </div><br>
+                  <div class="level-item">
+                    <a class="open-modal" data-modal-id="#modal{{job.count}}">
+                      <font size=3>More Details</font><br>
+                    </a></div><br>
+                    <div class="level-item">
+                      <!-- <a class="button is-success has-text-white" href="{% url 'login' %}">
+                        <font size=3>Apply</font>
+                      </a> -->
+                      <form method="post" action="{% url 'applied_successfull'%}">
+                        {% csrf_token %}
+                        <input type="hidden" name="job_id" value="{{job.job_id}}">
+                        <input type="hidden" name="candiate_email" value="{{request.user}}">
+                        <input type="submit" class="button is-success" value="Apply">
+                      </form>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <div class="modal" id="modal{{job.count}}">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">{{job.enrichment.company}} - {{job.enrichment.role}} @ {{job.enrichment.city}}</p>
+                    <button aria-label="close" class="delete close-modal" data-modal-id="#modal{{job.count}}"></button>
+                </header>
+                <section class="modal-card-body">
+                    {% autoescape off %}
+                    {{job.post}}
+                    {% endautoescape %}
+                </section>
+                <footer class="modal-card-foot">
+                    <a class="button is-success has-text-white" href="{% url 'login' %}">
+                        <font size=3>Apply</font>
+                    </a>
+                    <button aria-label="close" class="button close-modal" data-modal-id="#modal{{job.count}}">Close</button>
+                </footer>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- partial -->
+    </div>
+</center>
+{% endblock content %}
+{% block js_loader %}
+<script type="text/javascript">
+function toggleModalClasses(event) {
+    var modalId = event.currentTarget.dataset.modalId;
+    var modal = $(modalId);
+    modal.toggleClass('is-active');
+    $('html').toggleClass('is-clipped');
+};
+
+$('.open-modal').click(toggleModalClasses);
+
+$('.close-modal').click(toggleModalClasses);
+</script>
+{% endblock js_loader %}

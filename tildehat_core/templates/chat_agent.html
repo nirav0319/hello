@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<center>
+    <section class="section">
+        <div class="container is-fluid">
+            <div class="column is-half">
+                <h3 class="subtitle is-3 has-text-black">There is only one <img class="responsive-img" width="170" height="240" src="{% static 'images/jobs.jpg' %}"><br><br>
+                    But there are plenty of <b>jobs</b> here at tildehat!</h3><br>
+                <form action="#" method="POST" id="search">
+                    {% csrf_token %}
+                    <div class="field is-grouped">
+                        <p class="control is-expanded">
+                            <input class="input" type="text" name="search-box" placeholder="fresher content writer in bangalore">
+                        </p>
+                        <p class="control">
+                            <button type="submit" class="button" id="search_submit">Search</button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</center>
+{% endblock content %}

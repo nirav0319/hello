@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}<br><br>
+  <div class="container">
+    <div class="field is-grouped">
+      <p class="control is-expanded">
+        <input class="input" type="text" placeholder="Search For Talent...">
+      </p>
+      <p class="control">
+        <a class="button is-info">
+          Search
+        </a>
+      </p>
+    </div> <br>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <th>SNo</th>
+            <th>Email</th>
+            <th>Offer</th>
+          </thead>
+          <tbody>
+            {% for talent in talent_search %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ talent.email }}</td>
+              <td>
+                <a href="{% url 'hire_talent' talent.id %}">Hire</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

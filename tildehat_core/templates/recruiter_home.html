@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}<br><br>
+<div class="columns is-gapless">
+  <div class="column">
+    <div class="container is-fluid">
+        {% for job in job_data %}
+          <div class="card">
+            <a href="/jobupdate/{{job.job_id}}"> {{ job.job_description }} </a>
+            {% if job.walk_in%}
+              <p>Walk In: Yes</p>
+            {% else%}
+              <p>Walk In: No</p>
+            {% endif %}
+
+
+          </div>  <br>
+        {% endfor %}
+
+    </div>
+  </div>
+  <div class="column"><br><br>
+    <div class="buttons">
+      <a class="button is-primary" href="{% url 'create_jobs' %}">Create Job</a>
+      <a class="button is-success" href="{% url 'job_seekers' %}">Search For Talent</a>
+
+
+    </div>
+
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <th>SNO</th>
+          <th>Job Desc</th>
+          <th>Candiate E-mail</th>
+        </thead>
+        {% for candidate in applied_candiate_data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td> {{ candidate.job_post_user_info.job_description }}</td>
+          <td>{{ candidate.student_details }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+{% endblock %}
