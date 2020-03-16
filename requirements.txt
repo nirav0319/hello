@@ -1,3 +1,7 @@
 Django==2.2.5
-psycopg2==2.8.4
 coverage==5.0.2
+Pillow
+twilio
+django-extensions
+djangorestframework
+
